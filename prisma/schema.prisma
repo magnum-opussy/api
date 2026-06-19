@@ -1,0 +1,106 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+  runtime             = "nodejs"
+  moduleFormat        = "esm"
+  importFileExtension = "ts" 
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+
+model Goner {
+  gid String @id @default(uuid())
+  
+  username String
+  password String
+  email String
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  profiles GonerProfile[]
+  @@map("goners")
+}
+
+model GonerProfile {
+  id String @id @default(uuid())
+  gid String @unique
+  countryId String?
+  avatarId String? @unique
+  bannerId String? @unique
+
+  bio String?
+  fullname String?
+
+  pronouns String?
+  gender Gender?
+  phone String?
+  fullAddress String?
+  
+  favouriteGame String?
+  favouriteWayToDie String?
+  favouriteWeapon String?
+  favouriteLocation String?
+
+  birthdate DateTime?
+  firstSex DateTime?
+  secondSex DateTime?
+
+  lastSeen DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  avatar Image? @relation("Avatar", fields: [avatarId], references: [id])
+  banner Image? @relation("Banner", fields: [bannerId], references: [id])
+  country Country? @relation(fields: [countryId], references: [id])
+  goner Goner @relation(fields: [gid], references: [gid])
+
+  @@map("goner_profiles")
+
+}
+
+model Country {
+  id String @id @default(uuid())
+  name String
+  code String @unique
+
+  goners GonerProfile[]
+
+  @@map("countries")
+
+}
+
+model Image {
+  id String @id @default(uuid())
+  url String
+  name String
+  extension String
+  size Int
+
+  avatarOf GonerProfile? @relation("Avatar")
+  bannerOf GonerProfile? @relation("Banner")
+
+  @@map("images")
+}
+
+
+enum Gender {
+  MALE
+  FEMALE
+  NON_BINARY
+  TUROK
+  WALMART_BAG
+  GENDERFLUID_HELICOPTER
+  SNIPER_MONKEY
+  JEFFREY_EPSTEIN
+  MR_ZHORIK
+}

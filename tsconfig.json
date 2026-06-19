@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES2023",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2023"],
+    "types": ["node"], // ← подключает @types/node, делает `process` видимым
+    "strict": true,
+    "allowImportingTsExtensions": true, // нужно для сгенерированного клиента Prisma (.ts-импорты)
+    "noEmit": true, // обязательно вместе с allowImportingTsExtensions
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true
+  },
+  "include": [
+    "src/index.ts",
+    "src/**/*.ts",
+    "prisma.config.ts"
+  ]
+}
