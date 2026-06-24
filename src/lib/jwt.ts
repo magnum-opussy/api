@@ -3,6 +3,11 @@ import {
   verify as hverify,
 } from 'hono/jwt'
 import { env } from '../config/env'
+import { JWTPayload } from 'hono/utils/jwt/types'
+
+type VerifyJwtPayload = JWTPayload & {
+  sub: string
+}
 
 const sign = (gid: string) =>
   hsign(
@@ -15,8 +20,14 @@ const sign = (gid: string) =>
     env.JWT_SECRET,
   )
 
-const verify = (token: string) =>
-  hverify(token, env.JWT_SECRET, 'ES256')
+const verify = (
+  token: string,
+): Promise<VerifyJwtPayload> =>
+  hverify(
+    token,
+    env.JWT_SECRET,
+    'ES256',
+  ) as Promise<VerifyJwtPayload>
 
 export const JwtLib = {
   sign,

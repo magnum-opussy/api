@@ -1,5 +1,6 @@
 import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
+import { authRoutes } from './features/auth/auth.router'
 
 const app = new Hono()
 
@@ -9,6 +10,8 @@ app.get('/health', (c) => {
     message: 'Джеронимооооооо!',
   })
 })
+
+app.route('/api/v1/auth', authRoutes)
 
 const server = serve(app)
 
