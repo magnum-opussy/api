@@ -18,6 +18,7 @@ const sign = (gid: string) =>
         60 * 60 * 24 * 7,
     },
     env.JWT_SECRET,
+    'HS256',
   )
 
 const verify = (
@@ -26,7 +27,7 @@ const verify = (
   hverify(
     token,
     env.JWT_SECRET,
-    'ES256',
+    'HS256',
   ) as Promise<VerifyJwtPayload>
 
 export const JwtLib = {

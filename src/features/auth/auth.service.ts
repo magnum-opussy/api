@@ -9,12 +9,16 @@ import { JwtLib } from '../../lib/jwt'
 
 export const authService = {
   async signUp(input: SignUpInput) {
+    const {
+      email,
+      password,
+      username,
+      fullname,
+    } = input
+
     const exists = await db.goner.findFirst({
       where: {
-        OR: [
-          { email: input.email },
-          { username: input.username },
-        ],
+        OR: [{ email }, { username }],
       },
     })
 
@@ -25,12 +29,19 @@ export const authService = {
       })
     }
 
-    await db.goner.create({
+    const { gid } = await db.goner.create({
       data: {
-        ...input,
-        password: await PasswordLib.hash(
-          input.password,
-        ),
+        email,
+        username,
+        password:
+          await PasswordLib.hash(password),
+      },
+    })
+
+    await db.gonerProfile.create({
+      data: {
+        gid,
+        fullname: fullname ?? null,
       },
     })
 
@@ -94,5 +105,7 @@ export const authService = {
         message: 'Ваш доходяга не был найден!',
       })
     }
+
+    return goner
   },
 }

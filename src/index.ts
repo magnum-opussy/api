@@ -13,7 +13,10 @@ app.get('/health', (c) => {
 
 app.route('/api/v1/auth', authRoutes)
 
-const server = serve(app)
+const server = serve({
+  fetch: app.fetch,
+  port: 1234,
+})
 
 process.on('SIGNINT', () => {
   console.log(

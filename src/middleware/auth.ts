@@ -18,7 +18,8 @@ export const authMiddleware =
     try {
       const payload = await JwtLib.verify(token)
       c.set('gid', payload.sub)
-    } catch {
+      await next()
+    } catch (e) {
       throw new HTTPException(401, {
         message: 'Э токен неправильный ты чо',
       })
