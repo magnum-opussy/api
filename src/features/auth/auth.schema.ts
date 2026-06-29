@@ -13,9 +13,5 @@ export const SignUpSchema = z.object({
   fullname: z.string().min(2).optional(),
 })
 
-export type SignUpInput = z.infer<
-  typeof SignUpSchema
->
-export type SignInInput = z.infer<
-  typeof SignInSchema
->
+export type SignUpInput = z.infer<typeof SignUpSchema>
+export type SignInInput = z.infer<typeof SignInSchema>

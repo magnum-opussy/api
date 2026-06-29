@@ -22,12 +22,14 @@ model Goner {
   username String
   password String
   email String
-  
+  role Role @default(PEASANT)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   profile GonerProfile?
   @@map("goners")
 }
+
+
 
 model GonerProfile {
   id String @id @default(uuid())
@@ -58,9 +60,9 @@ model GonerProfile {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  avatar Image? @relation("Avatar", fields: [avatarId], references: [id])
-  banner Image? @relation("Banner", fields: [bannerId], references: [id])
-  country Country? @relation(fields: [countryId], references: [id])
+  avatar Image? @relation("Avatar", fields: [avatarId], references: [id]) // /upload-avatar
+  banner Image? @relation("Banner", fields: [bannerId], references: [id]) // /upload-banner
+  country Country? @relation(fields: [countryId], references: [id])  
   goner Goner? @relation(fields: [gid], references: [gid])
 
   @@map("goner_profiles")
@@ -92,6 +94,7 @@ model Image {
 }
 
 
+
 enum Gender {
   MALE
   FEMALE
@@ -102,4 +105,9 @@ enum Gender {
   SNIPER_MONKEY
   JEFFREY_EPSTEIN
   MR_ZHORIK
+}
+
+enum Role {
+  PEASANT
+  ADMIN
 }

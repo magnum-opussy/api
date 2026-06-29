@@ -1,6 +1,7 @@
 import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
-import { authRoutes } from './features/auth/auth.router'
+import { authRoutes } from './features/auth/auth.routes'
+import { gonerRoutes } from './features/goner/goner.routes'
 
 const app = new Hono()
 
@@ -12,6 +13,7 @@ app.get('/health', (c) => {
 })
 
 app.route('/api/v1/auth', authRoutes)
+app.route('/api/v1/goners', gonerRoutes)
 
 const server = serve({
   fetch: app.fetch,

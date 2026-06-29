@@ -14,9 +14,7 @@ if (!parsedEnv.success) {
   console.error(
     'ЛЕЕЕЕЕЕ!!!! .env нормально тоже делай полный рост!',
   )
-  console.error(
-    JSON.stringify(parsedEnv.error.issues),
-  )
+  console.error(JSON.stringify(parsedEnv.error.issues))
   process.exit(1)
 }
 
