@@ -15,7 +15,7 @@ const sign = (gid: string) =>
       sub: gid,
       exp:
         Math.floor(Date.now() / 1000) +
-        60 * 60 * 24 * 7,
+        60 * 60 * 24,
     },
     env.JWT_SECRET,
     'HS256',

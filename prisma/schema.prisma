@@ -25,8 +25,7 @@ model Goner {
   
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  
-  profiles GonerProfile[]
+  profile GonerProfile?
   @@map("goners")
 }
 
@@ -62,7 +61,7 @@ model GonerProfile {
   avatar Image? @relation("Avatar", fields: [avatarId], references: [id])
   banner Image? @relation("Banner", fields: [bannerId], references: [id])
   country Country? @relation(fields: [countryId], references: [id])
-  goner Goner @relation(fields: [gid], references: [gid])
+  goner Goner? @relation(fields: [gid], references: [gid])
 
   @@map("goner_profiles")
 

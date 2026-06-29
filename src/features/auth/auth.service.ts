@@ -98,6 +98,9 @@ export const authService = {
       where: {
         gid,
       },
+      include: {
+        profile: true,
+      },
     })
 
     if (!goner) {
