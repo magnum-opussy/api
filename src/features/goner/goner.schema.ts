@@ -16,12 +16,14 @@ const pronounsValid = z
   .toLowerCase()
   .catch('Изит окэй иф ай тачью')
   .optional()
+
 const phoneValid = z
   .string()
   .regex(
     rgxs.KZ_PHONE,
     'Это даже не казахский номер, бро...',
   )
+  .optional()
 
 export const ModifyGonerSchema = z.object({
   email: z.string().email().optional(),

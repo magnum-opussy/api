@@ -40,6 +40,6 @@ export const gonerService = {
     if (!goner)
       return fuckyou(404, 'Ваш доходяга не был найден(((')
 
-    r.delete(gid)
+    await r.delete(gid)
   },
 }

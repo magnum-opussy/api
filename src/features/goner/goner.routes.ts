@@ -15,7 +15,7 @@ export const gonerRoutes = new Hono<AppEnv>()
   .get('/:gid', zval('param', ps), async (c) =>
     c.json(await s.get.id(c.req.valid('param').gid)),
   )
-  .put(
+  .patch(
     '/:gid',
     zval('param', ps),
     zval('json', ms),

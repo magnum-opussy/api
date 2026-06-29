@@ -17,9 +17,10 @@ export const authMiddleware = createMiddleware<AppEnv>(
       const payload = await JwtLib.verify(token)
       c.set('gid', payload.sub.gid)
       c.set('role', payload.sub.role)
-      await next()
     } catch (e) {
       fuckyou(401, 'Э токен неправильный ты чо')
     }
+
+    await next()
   },
 )

@@ -4,55 +4,53 @@
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider            = "prisma-client"
+  output              = "../src/generated/prisma"
   runtime             = "nodejs"
   moduleFormat        = "esm"
-  importFileExtension = "ts" 
+  importFileExtension = "ts"
 }
 
 datasource db {
   provider = "postgresql"
 }
 
-
 model Goner {
   gid String @id @default(uuid())
-  
-  username String
-  password String
-  email String
-  role Role @default(PEASANT)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  profile GonerProfile?
+
+  username  String
+  password  String
+  email     String
+  role      Role          @default(PEASANT)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  profile   GonerProfile?
+
   @@map("goners")
 }
 
-
-
 model GonerProfile {
-  id String @id @default(uuid())
-  gid String @unique
+  id        String  @id @default(uuid())
+  gid       String  @unique
   countryId String?
-  avatarId String? @unique
-  bannerId String? @unique
+  avatarId  String? @unique
+  bannerId  String? @unique
 
-  bio String?
+  bio      String?
   fullname String?
 
-  pronouns String?
-  gender Gender?
-  phone String?
+  pronouns    String?
+  gender      Gender?
+  phone       String?
   fullAddress String?
-  
-  favouriteGame String?
+
+  favouriteGame     String?
   favouriteWayToDie String?
-  favouriteWeapon String?
+  favouriteWeapon   String?
   favouriteLocation String?
 
   birthdate DateTime?
-  firstSex DateTime?
+  firstSex  DateTime?
   secondSex DateTime?
 
   lastSeen DateTime?
@@ -60,40 +58,36 @@ model GonerProfile {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  avatar Image? @relation("Avatar", fields: [avatarId], references: [id]) // /upload-avatar
-  banner Image? @relation("Banner", fields: [bannerId], references: [id]) // /upload-banner
-  country Country? @relation(fields: [countryId], references: [id])  
-  goner Goner? @relation(fields: [gid], references: [gid])
+  avatar  Image?   @relation("Avatar", fields: [avatarId], references: [id]) // /upload-avatar
+  banner  Image?   @relation("Banner", fields: [bannerId], references: [id]) // /upload-banner
+  country Country? @relation(fields: [countryId], references: [id])
+  goner   Goner?   @relation(fields: [gid], references: [gid])
 
   @@map("goner_profiles")
-
 }
 
 model Country {
-  id String @id @default(uuid())
+  id   String @id @default(uuid())
   name String
   code String @unique
 
   goners GonerProfile[]
 
   @@map("countries")
-
 }
 
 model Image {
-  id String @id @default(uuid())
-  url String
-  name String
+  id        String @id @default(uuid())
+  url       String
+  name      String
   extension String
-  size Int
+  size      Int
 
   avatarOf GonerProfile? @relation("Avatar")
   bannerOf GonerProfile? @relation("Banner")
 
   @@map("images")
 }
-
-
 
 enum Gender {
   MALE
